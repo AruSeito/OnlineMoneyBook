@@ -8,3 +8,7 @@ export const parseToYearAndMonth = (str?: string) => {
     month: date.getMonth() + 1,
   };
 };
+
+export const FormatMonth = (month: number) => {
+  return month < 10 ? `0${month}` : month;
+};

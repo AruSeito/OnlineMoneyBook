@@ -1,4 +1,5 @@
 import React from "react";
+import { FormatMonth } from "../utility";
 
 interface IState {
   isOpend: boolean;
@@ -19,9 +20,7 @@ class MonthPicker extends React.Component<IProps, IState> {
     };
     this.ref = React.createRef();
   }
-  FormatMonth = (month: number) => {
-    return month < 10 ? `0${month}` : month;
-  };
+
   rangYearOrMonth = (number: number, start: number) => {
     const arr: Array<number> = [];
     for (let i = 0; i < number; i++) {
@@ -77,7 +76,7 @@ class MonthPicker extends React.Component<IProps, IState> {
           className="btn btn-lg btn-secondary dropdown-toggle"
           onClick={this.handleDropDown}
         >
-          {selectedYear}年{this.FormatMonth(month)}月
+          {selectedYear}年{FormatMonth(month)}月
         </button>
         {isOpend && (
           <div className="dropdown" style={{ display: "block" }}>

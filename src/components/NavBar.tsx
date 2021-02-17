@@ -1,5 +1,4 @@
 import React from "react";
-import { LIST_VIEW, CHART_VIEW } from "../utility";
 
 const changeActiveTab = (currentTab: string, activeTab: string) => {
   return currentTab === activeTab ? "nav-link active" : null;
@@ -7,7 +6,7 @@ const changeActiveTab = (currentTab: string, activeTab: string) => {
 
 interface IProps {
   activeTab: "list" | "chart";
-  handleChangeTab: (view: string) => void;
+  handleChangeTab: (view: "list" | "chart") => void;
 }
 
 const NavBar = (props: IProps) => {
@@ -16,11 +15,11 @@ const NavBar = (props: IProps) => {
     <ul className="nav nav-tabs nav-fill">
       <li className="nav-item">
         <a
-          className={`nav-link ${changeActiveTab(activeTab, LIST_VIEW)}`}
+          className={`nav-link ${changeActiveTab(activeTab, "list")}`}
           href="#"
           onClick={(e) => {
             e.preventDefault();
-            handleChangeTab(LIST_VIEW);
+            handleChangeTab("list");
           }}
         >
           <i className="fa fa-list" />
@@ -29,11 +28,11 @@ const NavBar = (props: IProps) => {
       </li>
       <li className="nav-item">
         <a
-          className={`nav-link ${changeActiveTab(activeTab, CHART_VIEW)}`}
+          className={`nav-link ${changeActiveTab(activeTab, "chart")}`}
           href="#"
           onClick={(e) => {
             e.preventDefault();
-            handleChangeTab(CHART_VIEW);
+            handleChangeTab("chart");
           }}
         >
           <i className="fa fa-pie-chart" />
