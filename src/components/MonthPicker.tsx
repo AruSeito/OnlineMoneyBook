@@ -3,17 +3,19 @@ import React from "react";
 interface IState {
   isOpend: boolean;
   selectedYear: number;
-  selectedMonth: number;
 }
-
-class MonthPicker extends React.Component<any, IState> {
+interface IProps {
+  year: number;
+  month: number;
+  changeDate: (year: number, month: number) => void;
+}
+class MonthPicker extends React.Component<IProps, IState> {
   ref: React.RefObject<HTMLDivElement>;
-  constructor(props: any) {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       isOpend: false,
-      selectedYear: new Date().getFullYear(),
-      selectedMonth: new Date().getMonth(),
+      selectedYear: this.props.year,
     };
     this.ref = React.createRef();
   }
@@ -31,15 +33,14 @@ class MonthPicker extends React.Component<any, IState> {
     e.preventDefault();
     this.setState({
       selectedYear: year,
-      selectedMonth: 0,
     });
   };
   handleChangeMonth = (e: any, month: number) => {
     e.preventDefault();
     this.setState({
       isOpend: false,
-      selectedMonth: month,
     });
+    this.props.changeDate(this.state.selectedYear, month);
   };
   handleDropDown = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -63,7 +64,8 @@ class MonthPicker extends React.Component<any, IState> {
     });
   };
   render() {
-    const { isOpend, selectedMonth, selectedYear } = this.state;
+    const { year, month } = this.props;
+    const { isOpend, selectedYear } = this.state;
     const monthRange = this.rangYearOrMonth(12, 1);
     const yearRange = this.rangYearOrMonth(9, -4).map(
       (value) => value + selectedYear
@@ -75,8 +77,7 @@ class MonthPicker extends React.Component<any, IState> {
           className="btn btn-lg btn-secondary dropdown-toggle"
           onClick={this.handleDropDown}
         >
-          {selectedYear}年
-          {selectedMonth ? this.FormatMonth(selectedMonth) : "--"}月
+          {selectedYear}年{this.FormatMonth(month)}月
         </button>
         {isOpend && (
           <div className="dropdown" style={{ display: "block" }}>
@@ -105,7 +106,7 @@ class MonthPicker extends React.Component<any, IState> {
                     key={index}
                     href="#"
                     className={
-                      monthNum === selectedMonth
+                      monthNum === month
                         ? "dropdown-item active"
                         : "dropdown-item"
                     }
