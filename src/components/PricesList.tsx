@@ -31,8 +31,8 @@ const PricesList: React.FC<IProps> = ({
           className="list-group-item d-flex justify-content-between align-items-center"
           key={item.id}
         >
-          <span className="col-1 badge badge-primary">
-            <i className={`fa ${item.category.iconName}`}></i>
+          <span className="col-1 badge badge-primary ">
+            <i className={`fa ${item.category.iconName} itemIcon`}></i>
           </span>
           <span className="col-5">{item.title}</span>
           <span className="col-2 font-weight-bold">{`${
@@ -40,18 +40,22 @@ const PricesList: React.FC<IProps> = ({
           }${item.price}元`}</span>
           <span className="col-2">{item.date}</span>
 
-          <i
-            className="fa fa-pencil"
+          <a
+            href="#"
             onClick={() => {
               handleChangeItem(item);
             }}
-          />
-          <i
-            className="fa fa-trash"
+          >
+            <i className="fa fa-pencil"></i>
+          </a>
+          <a
+            href="#"
             onClick={() => {
               handleDelItem(item);
             }}
-          />
+          >
+            <i className="fa fa-trash"></i>
+          </a>
         </li>
       ))}
     </ul>
