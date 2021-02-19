@@ -1,16 +1,23 @@
 import React from "react";
 
-interface IProps {
+export interface IProps {
   income: number;
   outcome: number;
 }
 
-const TotalPrice = (props: IProps) => {
-  const { income, outcome } = props;
+const TotalPrice: React.FC<IProps> = ({ income = 0, outcome = 0 }) => {
   return (
-    <div className="d-flex justify-content-between align-items-center">
-      <span>收入: {income ? income : "-"}</span>
-      <span>支出: {outcome ? outcome : "-"}</span>
+    <div className="row">
+      <div className="col">
+        <h5 className="income">
+          收入: <span>{income}</span>
+        </h5>
+      </div>
+      <div className="col">
+        <h5 className="outcome">
+          支出: <span>{outcome}</span>
+        </h5>
+      </div>
     </div>
   );
 };

@@ -19,8 +19,11 @@ interface IProps {
   handleDelItem: (item: IItem) => void;
 }
 
-const PricesList = (props: IProps) => {
-  const { items, handleChangeItem, handleDelItem } = props;
+const PricesList: React.FC<IProps> = ({
+  items,
+  handleChangeItem,
+  handleDelItem,
+}) => {
   return (
     <ul className="list-group list-group-flush">
       {items.map((item) => (

@@ -4,8 +4,7 @@ interface IProps {
   addItem: () => void;
 }
 
-const CreateBtn = (props: IProps) => {
-  const { addItem: handleClickAdd } = props;
+const CreateBtn: React.FC<IProps> = ({ addItem: handleClickAdd }) => {
   return (
     <button
       type="button"

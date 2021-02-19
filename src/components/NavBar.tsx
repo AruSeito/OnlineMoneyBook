@@ -9,8 +9,7 @@ interface IProps {
   handleChangeTab: (view: "list" | "chart") => void;
 }
 
-const NavBar = (props: IProps) => {
-  const { activeTab, handleChangeTab } = props;
+const NavBar: React.FC<IProps> = ({ activeTab, handleChangeTab }) => {
   return (
     <ul className="nav nav-tabs nav-fill">
       <li className="nav-item">
