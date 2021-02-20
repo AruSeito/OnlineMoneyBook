@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 interface ICategory {
   id: string;
   name: string;
@@ -40,14 +41,14 @@ const PricesList: React.FC<IProps> = ({
           }${item.price}元`}</span>
           <span className="col-2">{item.date}</span>
 
-          <a
-            href="#"
+          <Link
+            to={`/editor/${item.id}`}
             onClick={() => {
               handleChangeItem(item);
             }}
           >
             <i className="fa fa-pencil"></i>
-          </a>
+          </Link>
           <a
             href="#"
             onClick={() => {

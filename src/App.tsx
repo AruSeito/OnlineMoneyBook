@@ -1,10 +1,16 @@
+import Create from "./containers/Create";
 import Home from "./containers/Home";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <Home />
-    </div>
+    <Router>
+      <div className="App">
+        <Route exact path="/" component={Home} />
+        <Route path="/create" component={Create} />
+        <Route path="/editor/:id" component={Create} />
+      </div>
+    </Router>
   );
 }
 
