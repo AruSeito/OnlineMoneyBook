@@ -11,7 +11,7 @@ const itemList: Array<IItem> = [
     id: "1",
     title: "旅行青岛",
     price: 500,
-    date: "2020-03-04",
+    date: "2021-02-04",
     category: {
       id: "1",
       name: "旅行",
@@ -23,7 +23,7 @@ const itemList: Array<IItem> = [
     id: "2",
     title: "旅行青岛2",
     price: 100,
-    date: "2020-03-05",
+    date: "2021-03-05",
     category: {
       id: "1",
       name: "旅行",
@@ -35,7 +35,7 @@ const itemList: Array<IItem> = [
     id: "3",
     title: "银行利息",
     price: 100,
-    date: "2020-03-05",
+    date: "2021-03-05",
     category: {
       id: "2",
       name: "理财",
@@ -55,7 +55,7 @@ class Home extends React.Component<any, IState> {
     super(props);
     this.state = {
       itemList,
-      viewModal: "chart",
+      viewModal: "list",
       currentDate: parseToYearAndMonth(),
     };
   }
@@ -75,7 +75,7 @@ class Home extends React.Component<any, IState> {
       id: "4",
       title: "新建的数据",
       price: 100,
-      date: "2020-03-23",
+      date: "2021-02-23",
       category: {
         id: "2",
         name: "理财",
@@ -114,7 +114,6 @@ class Home extends React.Component<any, IState> {
     let totalIncome = 0,
       totalOutcome = 0;
     const itemListTmp = itemList.filter((item) => {
-      console.log(`${currentDate.year}-${FormatMonth(currentDate.month)}`);
       return item.date.includes(
         `${currentDate.year}-${FormatMonth(currentDate.month)}`
       );
@@ -147,7 +146,9 @@ class Home extends React.Component<any, IState> {
             handleDelItem={this.delItem}
           />
         )}
-        {viewModal === "chart" && <h1>this is chart modal</h1>}
+        {viewModal === "chart" && (
+          <h1 className="chart-title">this is chart modal</h1>
+        )}
       </div>
     );
   }
