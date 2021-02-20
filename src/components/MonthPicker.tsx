@@ -79,9 +79,9 @@ class MonthPicker extends React.Component<IProps, IState> {
           {selectedYear}年{FormatMonth(month)}月
         </button>
         {isOpend && (
-          <div className="dropdown-menu" style={{ display: "block" }}>
+          <div className="dropdown" style={{ display: "block" }}>
             <div className="row">
-              <div className="col-2 border-right">
+              <div className="col-2 border-right years-range">
                 {yearRange.map((yearNum, index) => (
                   <a
                     key={index}
@@ -99,7 +99,7 @@ class MonthPicker extends React.Component<IProps, IState> {
                   </a>
                 ))}
               </div>
-              <div className="col-2">
+              <div className="col-2 months-range">
                 {monthRange.map((monthNum, index) => (
                   <a
                     key={index}
