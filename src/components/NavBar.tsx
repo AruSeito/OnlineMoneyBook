@@ -4,7 +4,7 @@ const changeActiveTab = (currentTab: string, activeTab: string) => {
   return currentTab === activeTab ? "nav-link active" : null;
 };
 
-interface IProps {
+export interface IProps {
   activeTab: "list" | "chart";
   handleChangeTab: (view: "list" | "chart") => void;
 }
