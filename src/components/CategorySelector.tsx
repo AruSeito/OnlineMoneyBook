@@ -52,6 +52,7 @@ class CategorySelector extends React.Component<IProps, IState> {
                   className={`btn btn-outline-primary  ${activeClassName}`}
                 >
                   <i className={`fa ${category.inconName}`} />
+                  {category.name}
                 </button>
               </div>
             );

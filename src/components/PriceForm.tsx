@@ -130,7 +130,7 @@ class PriceForm extends React.Component<IProps, IState> {
               }}
             />
           </div>
-          <button type="submit" className="btn btn-primary submit-form">
+          <button type="submit" className="btn btn-primary submit-form mr-3">
             确认
           </button>
           <button
@@ -142,7 +142,7 @@ class PriceForm extends React.Component<IProps, IState> {
           </button>
         </form>
         {!validDataPass && (
-          <div className="alert alert-danger message" role="alert">
+          <div className="alert alert-danger message mt-5" role="alert">
             {this.state.message}
           </div>
         )}
