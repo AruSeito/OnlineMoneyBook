@@ -1,4 +1,5 @@
 import React from "react";
+import { AppContext } from "../App";
 import CreateBtn from "../components/CreateBtn";
 import MonthPicker from "../components/MonthPicker";
 import PricesList, { IItem } from "../components/PricesList";
@@ -124,45 +125,51 @@ class Home extends React.Component<any, IState> {
     });
 
     return (
-      <>
-        <div className="App-header">
-          <div className="row">
-            <div className="col">
-              <MonthPicker
-                year={currentDate.year}
-                month={currentDate.month}
-                changeDate={this.changeYearAndMonth}
-              />
-            </div>
-            <div className="col">
-              <TotalPrice income={totalIncome} outcome={totalOutcome} />
-            </div>
-          </div>
-        </div>
-        <div className="content-area py-3 px-3">
-          <Tabs activeIndex={0} onTabChange={this.changeActiveTab}>
-            <Tab>
-              <i className="fa fa-list" />
-              列表模式
-            </Tab>
-            <Tab>
-              <i className="fa fa-pie-chart" />
-              图表模式
-            </Tab>
-          </Tabs>
-          <CreateBtn addItem={this.addItem} />
-          {viewModal === 0 && (
-            <PricesList
-              items={itemListTmp}
-              handleChangeItem={this.modifyItem}
-              handleDelItem={this.delItem}
-            />
-          )}
-          {viewModal === 1 && (
-            <h1 className="chart-title">this is chart modal</h1>
-          )}
-        </div>
-      </>
+      <AppContext.Consumer>
+        {({ state }) => {
+          return (
+            <>
+              <div className="App-header">
+                <div className="row">
+                  <div className="col">
+                    <MonthPicker
+                      year={currentDate.year}
+                      month={currentDate.month}
+                      changeDate={this.changeYearAndMonth}
+                    />
+                  </div>
+                  <div className="col">
+                    <TotalPrice income={totalIncome} outcome={totalOutcome} />
+                  </div>
+                </div>
+              </div>
+              <div className="content-area py-3 px-3">
+                <Tabs activeIndex={0} onTabChange={this.changeActiveTab}>
+                  <Tab>
+                    <i className="fa fa-list" />
+                    列表模式
+                  </Tab>
+                  <Tab>
+                    <i className="fa fa-pie-chart" />
+                    图表模式
+                  </Tab>
+                </Tabs>
+                <CreateBtn addItem={this.addItem} />
+                {viewModal === 0 && (
+                  <PricesList
+                    items={itemListTmp}
+                    handleChangeItem={this.modifyItem}
+                    handleDelItem={this.delItem}
+                  />
+                )}
+                {viewModal === 1 && (
+                  <h1 className="chart-title">this is chart modal</h1>
+                )}
+              </div>
+            </>
+          );
+        }}
+      </AppContext.Consumer>
     );
   }
 }
