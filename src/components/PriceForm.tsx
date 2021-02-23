@@ -1,23 +1,33 @@
 import React from "react";
-import { category } from "./CategorySelector";
+import { isValidDate } from "../utility";
+import { IItem } from "./PricesList";
 
+interface ICItem {
+  title: string;
+  price: string;
+  date: string;
+}
 export interface IProps {
-  handleFormSubmit: () => void;
+  handleFormSubmit: ({ title, price, date }: ICItem, editMode: boolean) => void;
   handleCancelSubmit: () => void;
-  item?: category;
+  item?: IItem;
 }
 interface IState {
-  title?: string;
-  price?: string;
-  date?: string;
-  message?: string;
-  validDataPass?: boolean;
+  title: string;
+  price: string;
+  date: string;
+  message: string;
+  validDataPass: boolean;
 }
 
 class PriceForm extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
+    const { item } = this.props;
     this.state = {
+      title: item ? item.title : "",
+      price: item ? `${item.price}` : "",
+      date: item ? item.date : "",
       validDataPass: true,
       message: "",
     };
@@ -38,23 +48,35 @@ class PriceForm extends React.Component<IProps, IState> {
     });
   };
   checkValue = (e: React.FormEvent<HTMLFormElement>) => {
+    const { item, handleFormSubmit } = this.props;
+    const editMode = !!item?.id;
     const { title, price, date } = this.state;
-    if (
-      title &&
-      title.length > 0 &&
-      price &&
-      price.length > 0 &&
-      date &&
-      date.length > 0
-    ) {
-      this.setState({
-        validDataPass: true,
-      });
-      this.props.handleFormSubmit();
+    if (price && title && date) {
+      if (Number(price) < 0) {
+        this.setState({
+          validDataPass: false,
+          message: "价钱不能为负数",
+        });
+      } else if (!isValidDate(date)) {
+        this.setState({
+          validDataPass: false,
+          message: "请填写正确的日期格式",
+        });
+      } else {
+        this.setState({
+          validDataPass: true,
+          message: "",
+        });
+        if (editMode) {
+          handleFormSubmit({ ...item, title, price, date }, editMode);
+        } else {
+          handleFormSubmit({ title, price, date }, editMode);
+        }
+      }
     } else {
       this.setState({
         validDataPass: false,
-        message: "请填充必填项",
+        message: "请填写必填项",
       });
     }
     e.preventDefault();
@@ -111,7 +133,11 @@ class PriceForm extends React.Component<IProps, IState> {
           <button type="submit" className="btn btn-primary submit-form">
             确认
           </button>
-          <button type="button" className="btn btn-secondary submit-cancle">
+          <button
+            type="button"
+            className="btn btn-secondary submit-cancle"
+            onClick={this.props.handleCancelSubmit}
+          >
             关闭
           </button>
         </form>
