@@ -42,14 +42,17 @@ class CategorySelector extends React.Component<IProps, IState> {
             const activeClassName =
               selectedCategoryId === category.id ? "active" : null;
             return (
-              <div
-                className={`category-item col-3 ${activeClassName}`}
-                key={index}
-                onClick={() => {
-                  this.selectCategory(category);
-                }}
-              >
-                <i className={`fa ${category.inconName}`} />
+              <div className="col-3 category-item">
+                <button
+                  type="button"
+                  key={index}
+                  onClick={() => {
+                    this.selectCategory(category);
+                  }}
+                  className={`btn btn-outline-primary  ${activeClassName}`}
+                >
+                  <i className={`fa ${category.inconName}`} />
+                </button>
               </div>
             );
           })}

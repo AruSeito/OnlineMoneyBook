@@ -70,7 +70,7 @@ class MonthPicker extends React.Component<IProps, IState> {
       (value) => value + selectedYear
     );
     return (
-      <div className="dropdown month-picker" ref={this.ref}>
+      <div className="dropdown month-picker-component" ref={this.ref}>
         <h4>选择月份</h4>
         <button
           className="btn btn-lg btn-secondary dropdown-toggle"
@@ -79,9 +79,9 @@ class MonthPicker extends React.Component<IProps, IState> {
           {selectedYear}年{FormatMonth(month)}月
         </button>
         {isOpend && (
-          <div className="dropdown" style={{ display: "block" }}>
+          <div className="dropdown-menu" style={{ display: "block" }}>
             <div className="row">
-              <div className="col-2 border-right years-range">
+              <div className="col border-right years-range">
                 {yearRange.map((yearNum, index) => (
                   <a
                     key={index}
@@ -99,7 +99,7 @@ class MonthPicker extends React.Component<IProps, IState> {
                   </a>
                 ))}
               </div>
-              <div className="col-2 months-range">
+              <div className="col months-range">
                 {monthRange.map((monthNum, index) => (
                   <a
                     key={index}
