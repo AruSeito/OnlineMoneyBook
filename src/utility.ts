@@ -12,3 +12,11 @@ export const parseToYearAndMonth = (str?: string) => {
 export const FormatMonth = (month: number) => {
   return month < 10 ? `0${month}` : month;
 };
+
+export const isValidDate = (dateString: string) => {
+  const regEx = /^\d{4}-\d{2}-\d{2}$/;
+  if (!dateString.match(regEx)) return false; // Invalid format
+  const d = new Date(dateString);
+  if (Number.isNaN(d.getTime())) return false; // Invalid date
+  return d.toISOString().slice(0, 10) === dateString;
+};
