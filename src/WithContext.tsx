@@ -4,8 +4,8 @@ import { AppContext } from "./App";
 const WithContext = (Component: typeof React.Component) => {
   return (props: any) => (
     <AppContext.Consumer>
-      {({ state }) => {
-        return <Component {...props} data={state} />;
+      {({ state, actions }) => {
+        return <Component {...props} data={state} actions={actions} />;
       }}
     </AppContext.Consumer>
   );
