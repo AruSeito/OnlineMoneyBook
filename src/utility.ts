@@ -27,3 +27,7 @@ export const flattenArr = (arr: Array<any>) => {
     return map;
   }, {});
 };
+
+export const ID = () => {
+  return `_${Math.random().toString(36).substr(2, 9)}`;
+};
