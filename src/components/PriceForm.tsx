@@ -1,6 +1,5 @@
 import React from "react";
 import { isValidDate } from "../utility";
-import { IItem } from "./PricesList";
 
 interface ICItem {
   title: string;
@@ -10,47 +9,30 @@ interface ICItem {
 export interface IProps {
   handleFormSubmit: ({ title, price, date }: ICItem, editMode: boolean) => void;
   handleFormCancel: () => void;
-  item?: IItem;
+  item?: Record<string, any>;
 }
 interface IState {
-  title: string;
-  price: string;
-  date: string;
   message: string;
   validDataPass: boolean;
 }
 
 class PriceForm extends React.Component<IProps, IState> {
+  titleInput!: HTMLInputElement;
+  priceInput!: HTMLInputElement;
+  dateInput!: HTMLInputElement;
   constructor(props: IProps) {
     super(props);
-    const { item } = this.props;
     this.state = {
-      title: item ? item.title : "",
-      price: item ? `${item.price}` : "",
-      date: item ? item.date : "",
       validDataPass: true,
       message: "",
     };
   }
-  handleTitleChange = (value: string) => {
-    this.setState({
-      title: value,
-    });
-  };
-  handlePriceChange = (value: string) => {
-    this.setState({
-      price: value,
-    });
-  };
-  handleDateChange = (value: string) => {
-    this.setState({
-      date: value,
-    });
-  };
   checkValue = (e: React.FormEvent<HTMLFormElement>) => {
     const { item, handleFormSubmit } = this.props;
     const editMode = !!item?.id;
-    const { title, price, date } = this.state;
+    const price = this.priceInput.value.trim();
+    const date = this.dateInput.value.trim();
+    const title = this.titleInput.value.trim();
     if (price && title && date) {
       if (Number(price) < 0) {
         this.setState({
@@ -83,6 +65,10 @@ class PriceForm extends React.Component<IProps, IState> {
   };
   render() {
     const { validDataPass } = this.state;
+    const title = this.props.item?.title;
+    const price = this.props.item?.price;
+    const date = this.props.item?.date;
+
     return (
       <div>
         <form onSubmit={this.checkValue}>
@@ -93,10 +79,8 @@ class PriceForm extends React.Component<IProps, IState> {
               className="form-control"
               id="title"
               placeholder="请输入标题"
-              value={this.state.title}
-              onChange={(e) => {
-                this.handleTitleChange(e.target.value);
-              }}
+              defaultValue={title}
+              ref={(input: HTMLInputElement) => (this.titleInput = input)}
             />
           </div>
           <div className="form-group">
@@ -110,10 +94,8 @@ class PriceForm extends React.Component<IProps, IState> {
                 className="form-control"
                 id="price"
                 placeholder="请输入金额"
-                value={this.state.price}
-                onChange={(e) => {
-                  this.handlePriceChange(e.target.value);
-                }}
+                defaultValue={price}
+                ref={(input: HTMLInputElement) => (this.priceInput = input)}
               />
             </div>
           </div>
@@ -124,10 +106,8 @@ class PriceForm extends React.Component<IProps, IState> {
               className="form-control"
               id="date"
               placeholder="请输入日期"
-              value={this.state.date}
-              onChange={(e) => {
-                this.handleDateChange(e.target.value);
-              }}
+              defaultValue={date}
+              ref={(input: HTMLInputElement) => (this.dateInput = input)}
             />
           </div>
           <button type="submit" className="btn btn-primary submit-form mr-3">

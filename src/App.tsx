@@ -30,6 +30,12 @@ class App extends React.Component<{}, IState> {
     updateItem: (item: any, categoryId: string) => void;
     getInitData: () => void;
     selectNewMonth: (year: number, month: number) => void;
+    getEditData: (
+      id: string
+    ) => Promise<{
+      categories: Record<string, any>;
+      editItem: Record<string, any>;
+    }>;
   };
   constructor(props: Readonly<{}>) {
     super(props);
@@ -71,6 +77,9 @@ class App extends React.Component<{}, IState> {
         });
       },
       getInitData: () => {
+        this.setState({
+          isLoading: true,
+        });
         const { currentDate } = this.state;
         const getURLWithData = `/items?monthCategory=${
           currentDate.year
@@ -89,6 +98,9 @@ class App extends React.Component<{}, IState> {
         });
       },
       selectNewMonth: (year, month) => {
+        this.setState({
+          isLoading: true,
+        });
         const getURLWithData = `/items?monthCategory=${year}-${FormatMonth(
           month
         )}&_sort=timestamp&_order=desc`;
@@ -96,8 +108,33 @@ class App extends React.Component<{}, IState> {
           this.setState({
             currentDate: { year, month },
             items: flattenArr(items.data),
+            isLoading: false,
           });
         });
+      },
+      getEditData: async (id: string) => {
+        let promiseArr = [axios.get("/categories")];
+        if (id) {
+          const getURLWithID = `/items/${id}`;
+          promiseArr.push(axios.get(getURLWithID));
+        }
+        const [categories, editItems] = await Promise.all(promiseArr);
+        if (id) {
+          this.setState({
+            categories: flattenArr(categories.data),
+            isLoading: false,
+            items: { ...this.state.items, [id]: editItems.data },
+          });
+        } else {
+          this.setState({
+            categories: flattenArr(categories.data),
+            isLoading: false,
+          });
+        }
+        return {
+          categories: flattenArr(categories.data),
+          editItem: editItems.data,
+        };
       },
     };
   }

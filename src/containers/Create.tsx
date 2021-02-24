@@ -19,7 +19,6 @@ class Create extends React.Component<any, IState> {
     super(props);
     const { id } = props.match.params;
     const { items, categories } = props.data;
-    console.log(tabsText[categories[items[id].cid].type]);
     this.state = {
       selectedTab:
         id && items[id] ? tabsText[categories[items[id].cid].type] : 0,
@@ -27,6 +26,22 @@ class Create extends React.Component<any, IState> {
     };
   }
 
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    this.props.actions.getEditData(id).then((data: any) => {
+      const { editItem, categories } = data;
+      this.setState(
+        {
+          selectedTab:
+            id && editItem ? tabsText[categories[editItem.cid].type] : 0,
+          selectedCategory: id && editItem ? categories[editItem.cid] : null,
+        },
+        () => {
+          console.log(this.state);
+        }
+      );
+    });
+  }
   onTabChange = (index: number) => {
     this.setState({
       selectedTab: index,
@@ -49,7 +64,6 @@ class Create extends React.Component<any, IState> {
     this.props.history.push("/");
   };
   render() {
-    console.log(this.state);
     const { data } = this.props;
     const { categories, items } = data;
     const { id } = this.props.match.params;
@@ -58,7 +72,6 @@ class Create extends React.Component<any, IState> {
     const fillterCategories = Object.keys(categories)
       .filter((id) => categories[id].type === tabsText[selectedTab as number])
       .map((id) => categories[id]);
-
     return (
       <div
         className="create-page py-3 px-3 rounded mt-3"
