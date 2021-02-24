@@ -12,17 +12,10 @@ export interface IProps {
   handleSelectCategory: (category: category) => void;
   selectedCategory?: category | null;
 }
-interface IState {
-  selectedCategoryId?: string | null;
-}
 
-class CategorySelector extends React.Component<IProps, IState> {
+class CategorySelector extends React.Component<IProps, {}> {
   constructor(props: IProps) {
     super(props);
-    this.state = {
-      selectedCategoryId:
-        props.selectedCategory && (props.selectedCategory.id as string),
-    };
   }
 
   selectCategory = (category: category) => {
@@ -33,7 +26,6 @@ class CategorySelector extends React.Component<IProps, IState> {
   render() {
     const { categories, selectedCategory } = this.props;
     const selectedCategoryId = selectedCategory?.id;
-    // const { selectedCategoryId } = this.state;
     return (
       <div className="category-select-component">
         <div className="row">
