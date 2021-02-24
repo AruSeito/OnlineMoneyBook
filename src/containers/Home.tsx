@@ -49,17 +49,23 @@ class Home extends React.Component<any, IState> {
     const { data } = this.props;
     const { items, categories } = data;
     const { viewModal, currentDate } = this.state;
-    const itemsWithCategory = Object.keys(items).map((id) => {
-      items[id].category = categories[items[id].cid];
-      return items[id];
-    });
+    const itemsWithCategory = Object.keys(items)
+      .map((id) => {
+        items[id].category = categories[items[id].cid];
+        return items[id];
+      })
+      .filter((item) =>
+        item.date.includes(
+          `${currentDate.year}-${FormatMonth(currentDate.month)}`
+        )
+      );
     let totalIncome = 0,
       totalOutcome = 0;
     itemsWithCategory.forEach((item) => {
       if (item.category.type === "outcome") {
-        totalOutcome += item.price;
+        totalOutcome += Number(item.price);
       } else {
-        totalIncome += item.price;
+        totalIncome += Number(item.price);
       }
     });
 
