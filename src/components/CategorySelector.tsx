@@ -4,7 +4,7 @@ export interface category {
   id: string;
   name: string;
   type: "income" | "outcome";
-  inconName: string;
+  iconName: string;
 }
 
 export interface IProps {
@@ -26,16 +26,14 @@ class CategorySelector extends React.Component<IProps, IState> {
   }
 
   selectCategory = (category: category) => {
-    this.setState({
-      selectedCategoryId: category.id,
-    });
     this.props.handleSelectCategory(category);
     // event.preventDefault();
   };
 
   render() {
     const { categories, selectedCategory } = this.props;
-    const { selectedCategoryId } = this.state;
+    const selectedCategoryId = selectedCategory?.id;
+    // const { selectedCategoryId } = this.state;
     return (
       <div className="category-select-component">
         <div className="row">
@@ -51,7 +49,7 @@ class CategorySelector extends React.Component<IProps, IState> {
                   }}
                   className={`btn btn-outline-primary  ${activeClassName}`}
                 >
-                  <i className={`fa ${category.inconName}`} />
+                  <i className={`fa ${category.iconName}`} />
                   {category.name}
                 </button>
               </div>
