@@ -6,7 +6,7 @@ import WithContext from "../WithContext";
 import { withRouter } from "react-router-dom";
 
 interface IState {
-  selectedTab: number;
+  selectedTab: React.ReactText;
   selectedCategory: category | null;
 }
 
@@ -14,13 +14,16 @@ enum tabsText {
   outcome,
   income,
 }
-
 class Create extends React.Component<any, IState> {
   constructor(props: any) {
     super(props);
+    const { id } = props.match.params;
+    const { items, categories } = props.data;
+    console.log(tabsText[categories[items[id].cid].type]);
     this.state = {
-      selectedTab: 0,
-      selectedCategory: null,
+      selectedTab:
+        id && items[id] ? tabsText[categories[items[id].cid].type] : 0,
+      selectedCategory: id && items[id] ? categories[items[id].cid] : null,
     };
   }
 
@@ -41,15 +44,19 @@ class Create extends React.Component<any, IState> {
     if (!isEdit) {
       this.props.actions.createItem(data, this.state.selectedCategory?.id);
     } else {
+      this.props.actions.updateItem(data, this.state.selectedCategory?.id);
     }
     this.props.history.push("/");
   };
   render() {
+    console.log(this.state);
     const { data } = this.props;
-    const { categories } = data;
-    const { selectedTab } = this.state;
+    const { categories, items } = data;
+    const { id } = this.props.match.params;
+    const editItem = id && items[id] ? items[id] : {};
+    const { selectedTab, selectedCategory } = this.state;
     const fillterCategories = Object.keys(categories)
-      .filter((id) => categories[id].type === tabsText[selectedTab])
+      .filter((id) => categories[id].type === tabsText[selectedTab as number])
       .map((id) => categories[id]);
 
     return (
@@ -57,17 +64,22 @@ class Create extends React.Component<any, IState> {
         className="create-page py-3 px-3 rounded mt-3"
         style={{ backgroundColor: "#fff" }}
       >
-        <Tabs activeIndex={0} onTabChange={this.onTabChange}>
+        <Tabs
+          activeIndex={selectedTab as number}
+          onTabChange={this.onTabChange}
+        >
           <Tab>支出</Tab>
           <Tab>收入</Tab>
         </Tabs>
         <CategorySelector
           categories={fillterCategories}
           handleSelectCategory={this.handleSelectCategory}
+          selectedCategory={selectedCategory}
         />
         <PriceForm
           handleFormCancel={this.handleFormCancel}
           handleFormSubmit={this.handleFormSubmit}
+          item={editItem}
         />
       </div>
     );

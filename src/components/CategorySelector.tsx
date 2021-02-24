@@ -10,17 +10,18 @@ export interface category {
 export interface IProps {
   categories: Record<string, any>;
   handleSelectCategory: (category: category) => void;
-  selectedCategory?: category;
+  selectedCategory?: category | null;
 }
 interface IState {
-  selectedCategoryId: string | undefined;
+  selectedCategoryId?: string | null;
 }
 
 class CategorySelector extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      selectedCategoryId: props.selectedCategory && props.selectedCategory.id,
+      selectedCategoryId:
+        props.selectedCategory && (props.selectedCategory.id as string),
     };
   }
 

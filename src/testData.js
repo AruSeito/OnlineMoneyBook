@@ -50,7 +50,7 @@ export const testItems = [
     "date": "2021-02-15",
     "monthCategory": "2021-2",
     "id": "_kly1klf4g",
-    "cid": "1",
+    "cid": "2",
     "timestamp": 1613347200000
   },
   {
@@ -59,7 +59,7 @@ export const testItems = [
     "date": "2021-02-18",
     "monthCategory": "2021-2",
     "id": "_bd16bjeen",
-    "cid": "2",
+    "cid": "10",
     "timestamp": 1613606400000
   },
   {
@@ -68,7 +68,7 @@ export const testItems = [
     "date": "2021-02-20",
     "monthCategory": "2021-2",
     "id": "_jjfice21k",
-    "cid": "3",
+    "cid": "2",
     "timestamp": 1613779200000
   },
   {
@@ -77,7 +77,7 @@ export const testItems = [
     "date": "2021-02-11",
     "monthCategory": "2021-2",
     "id": "_1fg1wme63",
-    "cid": "11",
+    "cid": "12",
     "timestamp": 1613001600000
   },
   {
@@ -95,7 +95,7 @@ export const testItems = [
     "date": "2021-01-15",
     "monthCategory": "2021-1",
     "id": "_qryggm511",
-    "cid": "3",
+    "cid": "2",
     "timestamp": 1610668800000
   }
 ]

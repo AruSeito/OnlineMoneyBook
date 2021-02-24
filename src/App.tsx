@@ -19,7 +19,8 @@ export const AppContext = React.createContext({
 class App extends React.Component<{}, IState> {
   actions: {
     deleteItem: (item: { id: string }) => void;
-    createItem: (item: any, categoryId: any) => void;
+    createItem: (item: any, categoryId: string) => void;
+    updateItem: (item: any, categoryId: string) => void;
   };
   constructor(props: Readonly<{}>) {
     super(props);
@@ -42,6 +43,16 @@ class App extends React.Component<{}, IState> {
         const newItem = { ...item, id: newId, cid: categoryId };
         this.setState({
           items: { ...this.state.items, [newId]: newItem },
+        });
+      },
+      updateItem: (item, updateCategoryId) => {
+        const modifyItem = {
+          ...item,
+          cid: updateCategoryId,
+          timestamp: new Date(item.date).getTime(),
+        };
+        this.setState({
+          items: { ...this.state.items, [modifyItem.id]: modifyItem },
         });
       },
     };
