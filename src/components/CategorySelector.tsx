@@ -8,7 +8,7 @@ export interface category {
 }
 
 export interface IProps {
-  categories: Array<category>;
+  categories: Record<string, any>;
   handleSelectCategory: (category: category) => void;
   selectedCategory?: category;
 }
@@ -38,14 +38,13 @@ class CategorySelector extends React.Component<IProps, IState> {
     return (
       <div className="category-select-component">
         <div className="row">
-          {categories.map((category, index) => {
+          {categories.map((category: category, index: string) => {
             const activeClassName =
               selectedCategoryId === category.id ? "active" : null;
             return (
-              <div className="col-3 category-item">
+              <div className="col-3 category-item" key={index}>
                 <button
                   type="button"
-                  key={index}
                   onClick={() => {
                     this.selectCategory(category);
                   }}

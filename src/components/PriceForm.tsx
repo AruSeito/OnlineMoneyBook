@@ -9,7 +9,7 @@ interface ICItem {
 }
 export interface IProps {
   handleFormSubmit: ({ title, price, date }: ICItem, editMode: boolean) => void;
-  handleCancelSubmit: () => void;
+  handleFormCancel: () => void;
   item?: IItem;
 }
 interface IState {
@@ -136,7 +136,7 @@ class PriceForm extends React.Component<IProps, IState> {
           <button
             type="button"
             className="btn btn-secondary submit-cancle"
-            onClick={this.props.handleCancelSubmit}
+            onClick={this.props.handleFormCancel}
           >
             关闭
           </button>

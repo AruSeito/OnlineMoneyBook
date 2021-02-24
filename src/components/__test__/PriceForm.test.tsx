@@ -3,7 +3,7 @@ import React from "react";
 import PriceForm, { IProps } from "../PriceForm";
 
 const props: IProps = {
-  handleCancelSubmit: jest.fn(),
+  handleFormCancel: jest.fn(),
   handleFormSubmit: jest.fn(),
 };
 describe("测试PriceForm组件", () => {
@@ -46,6 +46,6 @@ describe("测试PriceForm组件", () => {
   it("click the cancel button should call the right callback", () => {
     const wrapper = mount(<PriceForm {...props} />);
     wrapper.find("button").last().simulate("click");
-    expect(props.handleCancelSubmit).toHaveBeenCalled();
+    expect(props.handleFormCancel).toHaveBeenCalled();
   });
 });
