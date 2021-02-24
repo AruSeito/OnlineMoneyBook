@@ -26,7 +26,7 @@ export const AppContext = React.createContext({
 class App extends React.Component<{}, IState> {
   actions: {
     deleteItem: (item: { id: string }) => void;
-    createItem: (item: any, categoryId: string) => void;
+    createItem: (item: any, categoryId: string) => Promise<Record<string, any>>;
     updateItem: (item: any, categoryId: string) => void;
     getInitData: () => void;
     selectNewMonth: (year: number, month: number) => void;
@@ -54,27 +54,35 @@ class App extends React.Component<{}, IState> {
           });
         });
       },
-      createItem: (item, categoryId) => {
+      createItem: async (item, categoryId) => {
         const newId = ID();
         const parseDate = parseToYearAndMonth(item.date);
-        item.monthCategory = `${parseDate.year}-${parseDate.month}`;
+        item.monthCategory = `${parseDate.year}-${FormatMonth(
+          parseDate.month
+        )}`;
         item.timestamp = new Date(item.date).getTime();
-        const newItem = { ...item, id: newId, cid: categoryId };
-        this.setState({
-          items: { ...this.state.items, [newId]: newItem },
+
+        const newItem = await axios.post("/items", {
+          ...item,
+          id: newId,
+          cid: categoryId,
         });
+        this.setState({
+          items: { ...this.state.items, [newId]: newItem.data },
+        });
+        return newItem.data;
       },
-      updateItem: (item, updateCategoryId) => {
-        const modifyItem = {
+      updateItem: async (item, updateCategoryId) => {
+        const updateData = {
           ...item,
           cid: updateCategoryId,
           timestamp: new Date(item.date).getTime(),
         };
-        axios.put(`/items/${item.id}`, modifyItem).then(() => {
-          this.setState({
-            items: { ...this.state.items, [modifyItem.id]: modifyItem },
-          });
+        const modifyItem = await axios.put(`/items/${item.id}`, updateData);
+        this.setState({
+          items: { ...this.state.items, [modifyItem.data.id]: modifyItem.data },
         });
+        return modifyItem.data;
       },
       getInitData: () => {
         this.setState({

@@ -28,19 +28,16 @@ class Create extends React.Component<any, IState> {
 
   componentDidMount() {
     const { id } = this.props.match.params;
-    this.props.actions.getEditData(id).then((data: any) => {
-      const { editItem, categories } = data;
-      this.setState(
-        {
+    if (id) {
+      this.props.actions.getEditData(id).then((data: any) => {
+        const { editItem, categories } = data;
+        this.setState({
           selectedTab:
             id && editItem ? tabsText[categories[editItem.cid].type] : 0,
           selectedCategory: id && editItem ? categories[editItem.cid] : null,
-        },
-        () => {
-          console.log(this.state);
-        }
-      );
-    });
+        });
+      });
+    }
   }
   onTabChange = (index: number) => {
     this.setState({
@@ -57,11 +54,18 @@ class Create extends React.Component<any, IState> {
   };
   handleFormSubmit = (data: Record<string, any>, isEdit: boolean) => {
     if (!isEdit) {
-      this.props.actions.createItem(data, this.state.selectedCategory?.id);
+      this.props.actions
+        .createItem(data, this.state.selectedCategory?.id)
+        .then(() => {
+          this.props.history.push("/");
+        });
     } else {
-      this.props.actions.updateItem(data, this.state.selectedCategory?.id);
+      this.props.actions
+        .updateItem(data, this.state.selectedCategory?.id)
+        .then(() => {
+          this.props.history.push("/");
+        });
     }
-    this.props.history.push("/");
   };
   render() {
     const { data } = this.props;
