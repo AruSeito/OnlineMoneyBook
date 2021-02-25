@@ -27,7 +27,7 @@ describe("测试MonthPicker组件", () => {
   it("测试点击按钮后，下拉菜单中选中的为当年年月", () => {
     wrapper.find(".dropdown-toggle").simulate("click");
     expect(wrapper.state("isOpend")).toEqual(true);
-    expect(wrapper.find(".dropdown").length).toEqual(2);
+    expect(wrapper.find(".dropdown-menu").length).toEqual(1);
     expect(wrapper.find(".years-range .dropdown-item").length).toEqual(9);
     expect(wrapper.find(".months-range .dropdown-item").length).toEqual(12);
     expect(wrapper.find(".years-range .dropdown-item.active").text()).toEqual(

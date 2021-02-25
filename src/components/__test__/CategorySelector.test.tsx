@@ -7,19 +7,19 @@ const categories: Array<category> = [
     id: "1",
     name: "旅行",
     type: "outcome",
-    inconName: "fa-plane",
+    iconName: "fa-plane",
   },
   {
     id: "2",
     name: "理财",
     type: "income",
-    inconName: "fa-bank",
+    iconName: "fa-bank",
   },
   {
     id: "3",
     name: "贷款",
     type: "income",
-    inconName: "fa-money",
+    iconName: "fa-money",
   },
 ];
 
@@ -41,23 +41,22 @@ describe("测试CategorySelector组件", () => {
     expect(wrapper.find(".category-item.active").length).toEqual(0);
     const firstIcon = wrapper.find(".category-item").first().find("i");
     expect(firstIcon.length).toEqual(1);
-    expect(firstIcon.props().className).toContain(categories[0].inconName);
+    expect(firstIcon.props().className).toContain(categories[0].iconName);
   });
   it("测试选中", () => {
     const wrapper = shallow(<CategorySelector {...props2} />);
-    expect(wrapper.find(".category-item").first().hasClass("active")).toEqual(
-      true
-    );
+    expect(
+      wrapper
+        .find(".category-item")
+        .first()
+        .find("button")
+        .first()
+        .hasClass("active")
+    ).toEqual(true);
   });
   it("测试点击", () => {
     const wrapper = shallow(<CategorySelector {...props2} />);
-    wrapper.find(".category-item").at(1).simulate("click");
-    expect(wrapper.find(".category-item").first().hasClass("active")).toEqual(
-      false
-    );
-    expect(wrapper.find(".category-item").at(1).hasClass("active")).toEqual(
-      true
-    );
+    wrapper.find(".category-item .btn").at(1).simulate("click");
     expect(props2.handleSelectCategory).toHaveBeenCalledWith(categories[1]);
   });
 });

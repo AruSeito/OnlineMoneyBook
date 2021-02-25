@@ -14,7 +14,7 @@ export interface IItem {
   date: string;
   category: ICategory;
 }
-interface IProps {
+export interface IProps {
   items: Array<IItem>;
   handleChangeItem: (item: IItem) => void;
   handleDelItem: (item: IItem) => void;
